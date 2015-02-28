@@ -1,6 +1,6 @@
 package shell.geometry;
 /*
-Copyright [2015] [Nguyen Viet Tan]
+Copyright 2015 Nguyen Viet Tan
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
