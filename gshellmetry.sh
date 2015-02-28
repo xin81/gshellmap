@@ -1,12 +1,10 @@
 #/bin/bash
 MAIN=shell.geometry.GooMetryShell
-p1=--apiKey ## api-Key
-v1=AIzaSyAg-oNoJ39Qx__eTo-8art7b4_TViUn7H8 #$3 # API-KEY
-p2=--latitude
-v2=$1
-p3=--longitude
-v3=$2
+p1=--latitude
+v1=25.033333
+p2=--longitude
+v2=121.633333
 
-CLASSPATH=$CLASSPATH:gshell_lib/okhttp-2.2.0.jar:gshell_lib/gson-2.3.1.jar:gshell_lib/joda-time-2.7.jar:gmapservice.jar:okio.jar:gshellmap.jar
+CLASSPATH=$CLASSPATH:libs/okhttp-2.2.0.jar:libs/gson-2.3.1.jar:libs/joda-time-2.7.jar:libs/gmapservice.jar:libs/okio.jar:gshellmap.jar
 echo "java -cp" $CLASSPATH $MAIN $p1 "secret" $p2 $v2 $p3 $v3
-java -cp $CLASSPATH $MAIN $p1 $v1 $p2 $v2 $p3 $v3
+java -cp $CLASSPATH $MAIN $p1 $v1 $p2 $v2

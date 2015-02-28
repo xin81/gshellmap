@@ -24,6 +24,8 @@ import java.io.PrintStream;
 // dependencies: joda-time-2.7.jar
 import org.joda.time.Instant;
 
+import shell.PropertyReader;
+
 /*
  *  URL:
  ** https://github.com/googlemaps/google-maps-services-java
@@ -56,7 +58,7 @@ public class GMapShell{
 		String cp="$CLASSPATH";
 		out.println("usage: java -cp "+cp+":"+jarfile+" "+GMapShell.class.getName()+" PARAMETERS|[Optional Parameters]");
 		out.println("PARAMETERS:");
-		out.println("--apiKey\t[Your_Google_API_KEY]");		
+		// out.println("--apiKey\t[Your_Google_API_KEY]");		
 		out.println("\nOptional Parameters:");
 		out.println("--help\tprints this help information");
 		out.println("--language\t[de, en, en-GB, en-AU, es, fr, ...]");
@@ -115,6 +117,7 @@ public class GMapShell{
 		// TODO Auto-generated method stub
 		// requirements
 		String KEY="************************************";
+		KEY=PropertyReader.getPropertyValue("txt/edit_me.txt", "apiKey");
 		String language="en-GB";
 		Instant instant=Instant.now();
 		Unit unit=Unit.METRIC;
@@ -144,8 +147,6 @@ public class GMapShell{
 				if(args[i].compareToIgnoreCase("--help")==0){
 					printHelp(System.out);
 					System.exit(0);
-				}else if(args[i].compareToIgnoreCase("--apiKey")==0){
-					KEY=args[i+1];
 				}else if(args[i].compareToIgnoreCase("--language")==0){
 					language=args[i+1];
 				}else if(args[i].compareToIgnoreCase("--departure")==0){

@@ -109,9 +109,8 @@ public class GooMetry {
 	 * </ul>
 	 * 
 	 * and updates all corresponding data
-	 * @param KEY your API-Key from Google
 	 */
-	public void retrieve(final String KEY, final GeoApiContext context){
+	public void retrieve(final GeoApiContext context){
 		try{
 			GeocodingResult[] result=GeocodingApi.geocode(context, address).await();
 			Geometry geometry=result[0].geometry;

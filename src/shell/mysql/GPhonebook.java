@@ -26,6 +26,7 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.Statement;
 
+import shell.PropertyReader;
 import shell.geometry.GooMetry;
 
 import com.google.maps.GeoApiContext;
@@ -48,7 +49,7 @@ public class GPhonebook {
 		
 		out.println("usage: java -cp "+cp+":"+jarfile+" "+className+" PARAMATERS|[OPTIONAL_PARAMETERS]");
 		out.println("PARAMETERS:");
-		out.println("--apiKey\tYOUR_OWN_API-KEY");
+		out.println("--new\t[false|true] add a new contact to your database");
 		out.println("--query\t[all|address|email|phone]");
 		
 		out.println("OPTIONAL_PARAMETERS");
@@ -146,10 +147,201 @@ public class GPhonebook {
 		System.out.println(row+" result(s)");
 	}
 	
+	/* Find someone's address, phone numbers, and email addresses */
+	private static void retrieve(final String query, Statement statement)throws SQLException{
+		System.out.println("Find someone's addresses, phone numbers, and email address");
+		String sqlAddress="";
+		String sqlEmail="";
+		String sqlPhone="";
+		String lastname="";
+		String name="";
+		
+		final int MAX=2;
+		try{
+			InputStream[]is=new InputStream[MAX];
+			InputStreamReader[] isr=new InputStreamReader[MAX];
+			BufferedReader[]br=new BufferedReader[MAX];
+			for(int j=0; j < MAX; j++){
+				is[j]=System.in;
+				isr[j]=new InputStreamReader(is[j]);
+				br[j]=new BufferedReader(isr[j]);
+			}
+			
+			String string="";
+			System.out.print("last name: ");
+			string=br[0].readLine();
+			if(string.isEmpty()==false){
+				lastname=string;
+			}
+			
+			System.out.print("first and/or middle name: ");
+			string=br[1].readLine();
+			if(string.isEmpty()==false){
+				name=string;
+			}
+			
+			for(int j=0; j < MAX; j++){
+				br[j].close();
+				isr[j].close();
+				is[j].close();
+			}
+		}catch(IOException e){
+			System.err.println(e.getMessage());
+			
+		}
+		
+		String condition="(LOWER(person.lastname)=LOWER('"+lastname+"'))AND(LOWER(person.name) LIKE LOWER('%"+name+"%'))";
+		String pselection="person.lastname, person.name";
+		String KEY="**************";
+		KEY=PropertyReader.getPropertyValue("txt/edit_me.txt", "apiKey");
+		ResultSet result=null;
+		/****************************************************************************************************************************************/
+		if(query.compareToIgnoreCase("address")==0){
+			sqlAddress="\nSELECT "+pselection+", person.latitude, person.longitude FROM person WHERE("+condition+")";
+			result=statement.executeQuery(sqlAddress);
+			retrieveAddress(KEY, result);
+		}else if(query.compareToIgnoreCase("email")==0){
+			sqlEmail="\nSELECT "+pselection+", email.address FROM person INNER JOIN email ON person.id=email.pid WHERE("+condition+")";
+			result=statement.executeQuery(sqlEmail);
+			retrieveMailAddress(result);
+		}else if(query.compareToIgnoreCase("phone")==0){
+			sqlPhone="\nSELECT "+pselection+", phone.area_code, phone.number FROM person INNER JOIN phone ON person.id=phone.pid WHERE("+condition+")";
+			result=statement.executeQuery(sqlPhone);
+			retrievePhoneNumber(result);
+		}else if(query.compareToIgnoreCase("all")==0){
+			sqlAddress="\nSELECT "+pselection+", person.latitude, person.longitude FROM person WHERE("+condition+")";
+			result=statement.executeQuery(sqlAddress);
+			retrieveAddress(KEY, result);
+			sqlEmail="\nSELECT "+pselection+", email.address FROM person INNER JOIN email ON person.id=email.pid WHERE("+condition+")";
+			result=statement.executeQuery(sqlEmail);
+			retrieveMailAddress(result);
+			sqlPhone="\nSELECT "+pselection+", phone.area_code, phone.number FROM person INNER JOIN phone ON person.id=phone.pid WHERE("+condition+")";
+			result=statement.executeQuery(sqlPhone);
+			retrievePhoneNumber(result);
+		}else{
+			System.err.println("unknown query type: "+query);
+		}
+	/*******************************************************************************************************************************/
+		if(result!=null){
+			result.close();
+		}
+		if(statement!=null){
+			statement.close();
+		}
+	}
+	
+	/* Adds new contacts to the database
+	 * @param statement instance of Statement)
+	 */
+	private static void insert(Statement statement)throws SQLException{
+		System.out.println("Add new contact");
+		String lastname="Doe";
+		String name="Jone";
+		String address="The Mall, SW14 7EN London, UK";
+		String email="john.doe@predestination.com";		
+		int area_code=0;
+		BigDecimal number=new BigDecimal(0);
+		
+		/* create input -, and buffer streams */
+		final int MAX=6;
+		InputStream[] is=new InputStream[MAX];
+		InputStreamReader[] isr=new InputStreamReader[MAX];
+		BufferedReader[] br=new BufferedReader[MAX];
+		for(int i=0; i < MAX; i++){
+			is[i]=System.in;
+			isr[i]=new InputStreamReader(is[i]);
+			br[i]=new BufferedReader(isr[i]);
+		}
+		try{
+			// user inputs
+			System.out.print("last name: ");
+			String string=br[0].readLine();
+			if(string.isEmpty()==false){
+				lastname=string;
+			}
+			System.out.print("name (first and middle names): ");
+			string=br[1].readLine();
+			if(string.isEmpty()==false){
+				name=string;
+			}
+			System.out.print("address: ");
+			string=br[2].readLine();
+			if(string.isEmpty()==false){
+				address=string;
+			}
+			
+			System.out.print("email: ");
+			string=br[3].readLine();
+			if(string.isEmpty()==false){
+				email=string;
+			}
+			
+			System.out.print("area code: ");
+			string=br[4].readLine();
+			if(string.isEmpty()==false){
+				try{
+					area_code=Integer.parseInt(string);
+				}catch(NumberFormatException e){
+					System.err.println(e.getMessage());
+				}
+			}
+			
+			System.out.print("phone number: ");
+			string=br[5].readLine();
+			if(string.isEmpty()==false){
+				long l=Long.parseLong(string);
+				try{
+					number=BigDecimal.valueOf(l);
+				}catch(NumberFormatException e){
+					System.err.println(e.getMessage());
+				}
+			}
+			/* retrieve latitude and longitude values for the given address */
+			GooMetry gmetry=new GooMetry(address);
+			String apiKey="****************************************";
+			apiKey=PropertyReader.getPropertyValue("txt/edit_me.txt", "apiKey");
+			GeoApiContext context=new GeoApiContext().setApiKey(apiKey);
+			gmetry.retrieve(context);
+			double latitude=90.0;
+			double longitude=0.0;
+			latitude=gmetry.getLatitude();
+			longitude=gmetry.getLongitude();
+			
+
+			int row=0;
+			// query the id by given last name, and a name
+			String sql="SELECT id FROM person WHERE((lastname='"+lastname+"')AND(name='"+name+"'))";			
+			
+			// insert statements
+			String sql_person="INSERT INTO person(lastname, name, latitude, longitude)VALUES('"+lastname+"', '"+name+"', "+latitude+", "+longitude+");";
+			row=statement.executeUpdate(sql_person);
+			System.out.println("insert into person: "+row);
+			
+			String sql_email="INSERT INTO email(address, pid) VALUES('"+email+"', ("+sql+"))";
+			row=statement.executeUpdate(sql_email);
+			System.out.println("insert into email: "+row);
+			
+			String sql_phone="INSERT INTO phone(area_code, number, pid)VALUES("+area_code+", "+number+", ("+sql+"))";
+			row=statement.executeUpdate(sql_phone);
+			System.out.println("insert into phone: "+row);
+			
+			/* close all streams */
+			for(int i=0; i < MAX; i++){
+				br[i].close();
+				isr[i].close();
+				is[i].close();
+			}
+			
+			statement.close();
+		}catch(IOException e){
+			System.err.println(e.getMessage());
+		}
+	}
+	
 	/**
 	 * Executes this program by this following command:
 	 * <code>java -cp $CLASSPATH:$main_jarfile shell.mysql.GPhonebook
-	 * --apiKey YOUR_API-KEY
+	 * --new [false|true]
 	 * --query [all|address|mail|phone]
 	 * </code>
 	 * $CLASSPATH contains:
@@ -171,8 +363,8 @@ public class GPhonebook {
 			printHelp(System.err);
 			System.exit(-1);
 		}else{
-			String KEY="**************";
 			String query="";
+			boolean addingContact=false;
 			
 			int i=0;
 			do{
@@ -181,111 +373,47 @@ public class GPhonebook {
 					if(args[i].compareToIgnoreCase(str+"help")==0){
 						printHelp(System.out);
 						System.exit(0);
-					}else if(args[i].compareToIgnoreCase(str+"apiKey")==0){
-						if(args[i+1].isEmpty()==false){
-							KEY=args[i+1];
-						}
-					
 					}else if(args[i].compareToIgnoreCase(str+"query")==0){
 						if(args[i+1].isEmpty()==false){
 							query=args[i+1];
+						}
+					}else if(args[i].compareToIgnoreCase(str+"new")==0){
+						if(args[i+1].isEmpty()==false){
+							if(args[i+1].compareToIgnoreCase("true")==0){
+								addingContact=true;
+							}else{
+								addingContact=false;
+							}
 						}
 					}
 				}
 				i++;
 			}while(i < (args.length));
-			String lastname="";
-			String name="";
-			
-			final int MAX=2;
-			try{
-				InputStream[]is=new InputStream[MAX];
-				InputStreamReader[] isr=new InputStreamReader[MAX];
-				BufferedReader[]br=new BufferedReader[MAX];
-				for(int j=0; j < MAX; j++){
-					is[j]=System.in;
-					isr[j]=new InputStreamReader(is[j]);
-					br[j]=new BufferedReader(isr[j]);
-				}
-				
-				String string="";
-				System.out.print("last name: ");
-				string=br[0].readLine();
-				if(string.isEmpty()==false){
-					lastname=string;
-				}
-				
-				System.out.print("first and/or middle name: ");
-				string=br[1].readLine();
-				if(string.isEmpty()==false){
-					name=string;
-				}
-				
-				for(int j=0; j < MAX; j++){
-					br[j].close();
-					isr[j].close();
-					is[j].close();
-				}
-			}catch(IOException e){
-				System.err.println(e.getMessage());
-			}
+
 			
 			String driverName=Driver.class.getName();
 			try{
 				Class.forName(driverName);
 				
 				/* Feel free to create your own database, and to change the user name, and the password */
-				String db="phonebook"; // your database in your mysql distribution
-				String host="localhost"; // your host name or ip address
+				String db="phonebook";
+				String host="localhost";
 				String url="jdbc:mysql://"+host+"/"+db;
-				String user="your own user name for your mysql database"; // Change This !!
-				String password="your own password for your mysql database"; // Change This !!
+				String user=PropertyReader.getPropertyValue("txt/edit_me.txt", "mysql_user");
+				String password=PropertyReader.getPropertyValue("txt/edit_me.txt", "mysql_password");
 				
-				String sqlAddress="";
-				String sqlEmail="";
-				String sqlPhone="";
-				String condition="(LOWER(person.lastname)=LOWER('"+lastname+"'))AND(LOWER(person.name) LIKE LOWER('%"+name+"%'))";
-				String pselection="person.lastname, person.name";			
 				try{
 					Connection connection=DriverManager.getConnection(url, user, password);
 					Statement statement=connection.createStatement();
-					ResultSet result=null;					
-
-					if(query.compareToIgnoreCase("address")==0){
-						sqlAddress="\nSELECT "+pselection+", person.latitude, person.longitude FROM person WHERE("+condition+")";
-						result=statement.executeQuery(sqlAddress);
-						retrieveAddress(KEY, result);
-					}else if(query.compareToIgnoreCase("email")==0){
-						sqlEmail="\nSELECT "+pselection+", email.address FROM person INNER JOIN email ON person.id=email.pid WHERE("+condition+")";
-						result=statement.executeQuery(sqlEmail);
-						retrieveMailAddress(result);
-					}else if(query.compareToIgnoreCase("phone")==0){
-						sqlPhone="\nSELECT "+pselection+", phone.area_code, phone.number FROM person INNER JOIN phone ON person.id=phone.pid WHERE("+condition+")";
-						result=statement.executeQuery(sqlPhone);
-						retrievePhoneNumber(result);
-					}else if(query.compareToIgnoreCase("all")==0){
-						sqlAddress="\nSELECT "+pselection+", person.latitude, person.longitude FROM person WHERE("+condition+")";
-						result=statement.executeQuery(sqlAddress);
-						retrieveAddress(KEY, result);
-						sqlEmail="\nSELECT "+pselection+", email.address FROM person INNER JOIN email ON person.id=email.pid WHERE("+condition+")";
-						result=statement.executeQuery(sqlEmail);
-						retrieveMailAddress(result);
-						sqlPhone="\nSELECT "+pselection+", phone.area_code, phone.number FROM person INNER JOIN phone ON person.id=phone.pid WHERE("+condition+")";
-						result=statement.executeQuery(sqlPhone);
-						retrievePhoneNumber(result);
-					}else{
-						System.err.println("unknown query type: "+query);
+					if(query.isEmpty()==false){
+						retrieve(query, statement);
 					}
-				
-					if(result!=null){
-						result.close();
+					
+					if(addingContact==true){
+						insert(statement);
 					}
-					if(statement!=null){
-						statement.close();
-					}
-					if(connection!=null){
-						connection.close();
-					}
+					
+					connection.close();
 				}catch(SQLException e){
 					System.err.println(e.getMessage());
 				}			

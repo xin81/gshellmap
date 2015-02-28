@@ -63,8 +63,19 @@ and enable these following web services:
 </ul>
 
 <h2>Execute GShell Map</h2>
+Before you run this program, please edit txt/edit_me.txt, and change the values of apiKey, mysql_user, and mysql_password into your own corresponding user data.
+If you don't have a <a href="http://dev.mysql.com/downloads">mysql distribution</a> yet, please download it, and install it on your hard disk. Afterwards, follow the instructions of the section
+<a href="#mysql">Create the database phonebook for GPhonebook</a>
+
+<br />
+## txt/edit_me.txt<br />
+<p class="code">apiKey:YOUR_OWN_API-KEY<br />
+mysql_user:YOUR_OWN_MYSQL_USERNAME<br />
+mysql_password:YOUR_OWN_MYSQL_PASSWORD
+</p>
+
 <h3>Run GShell Map in Eclipse</h3>
-<img src="eclipse.png" alt="Running GShell Map in eclipse" align="bottom" />
+<img src="eclipse1.png" alt="Running GShell Map in eclipse" align="bottom" />
 Running GShell Map in an IDE (<b>I</b>ntegrated <b>D</b>elevopment <b>E</b>nvironment") is the easiest way.
 Just import GShellMap project and any other depending projects
 (like <a href="https://github.com/googlemaps/google-maps-services-java">google-maps-services-java-master</a>,
@@ -80,7 +91,6 @@ To run the actual GShell Map application, select the GShell Map project, start a
 <li>shell.geometry.GooMetryShell</li>
 <li>shell.mysql.GPhonebook</li>
 </ul>
-Don't forget to provide your API-Key in the "Arguements" section by typing <div class="code">--apiKey YOUR_OWN_API-KEY</div>.
 It should work with any Java supporting IDE like <a href="http://archive.eclipse.org/eclipse/downloads/drops/R-3.8-201206081200/index.php#EclipseSDK">eclipse</a>.
 
 <h3>Run GShell Map in a shell box/command line (cmd)/console</h3>
@@ -93,7 +103,8 @@ I had to download some requiring projects, and compile them for myself. After th
 <li>okio.jar (Okio)</li>
 </ul>
 
-Any other depending libraries are stored in the subfolder <i>gshell_lib</i>. Of course, you can name it as you like. To keep it simple, let's call the subfolder
+Any other depending libraries are stored in the subfolder <i>libs</i>. Of course, you can name it as you like.
+To keep it simple, let's call the subfolder
 <div class="code">LIB_PATH</div>
 In general, the command for running this application looks like this:<br />
 <div class="code">java -cp .:$CLASSPATH $MAIN_CLASS --parameter0 value0 --parameter1 value1 ... --parameter(n-1) --value(n-1)</div><br />
@@ -103,8 +114,8 @@ $CLASSPATH contains
 <li><div class="code">LIB_PATH</div>/gson-2.3.1.jar</li>
 <li><div class="code">LIB_PATH</div>/joda-time-2.7.jar</li>
 <li><div class="code">LIB_PATH</div>/mysql-connector-java-5.1.34-bin.jar</li>
-<li>gmapservice.jar</li>
-<li>okio.jar</li>
+<li><div class="code">LIB_PATH</div>/gmapservice.jar</li>
+<li><div class="code">LIB_PATH</div>/okio.jar</li>
 <li>gshellmap.jar</li>
 </ul>
 
@@ -116,18 +127,14 @@ $MAIN_CLASS can be any of these ones:
 </ul>
 
 <h3>Run GMapShell</h3>
+<b>Note: the option --apiKey is deprecated!</b>.
+You shouldn't use it anymore. Once you edit txt/edit_me.txt, the program will find your API-Key in the text file.
+
 <img src="gshellmap02.png" alt="GMapShell (user inputs)" />
 <img src="gshellmap01.png" alt="GMapShell (results)" />
-<div class="code">java -cp $CLASSPATH shell.distance.GMapShell $PARAMETERS $OPTIONAL_PARAMETERS</div><br />
+<div class="code">java -cp $CLASSPATH shell.distance.GMapShell $OPTIONAL_PARAMETERS</div><br />
 GMapShell calculates distances and travel duration between an origin (start point location), and a destination (end point location).
 It also retrieves latitude -, longitude -, and elevation values of each given address.
-
-<p class="code">
-<br />
-Parameters:<br />
---apiKey [Your_Google_API_KEY]
-</p>
-
 <p class="code"><br />
 Optional Parameters:<br />
 --help prints this help information<br />
@@ -139,13 +146,13 @@ Optional Parameters:<br />
 </p>
 
 <h3>Run GooMetryShell</h3>
+<b>--apiKey is deprecated!</b> (read above)<br />
 <img src="gmetryshell.png" alt="GooMetryShell" />
 <div class="code">java -cp $CLASSPATH shell.geometry.GooMetryShell $PARAMETERS $OPTIONAL_PARAMETERS</div><br />
 GooMetryShell retrieves addresses by given coordinate values (latitude and longitude).
 
 <p class="code"><br />
 PARAMETERS:<br />
---apiKey	[Your_Google_API_KEY]<br />
 --latitude	[-90.000000, 90.000000]<br />
 --longitude	[-179.999999, 180.000000]
 </p>
@@ -156,6 +163,7 @@ Optional Parameters:<br />
 </p>
 
 <h3>Run GPhonebook</h3>
+<b>Note: --apiKey is deprecated!</b> (read above)<br />
 <img src="gphonebook.png" alt="GPhoneBook" />
 <div class="code">java -cp $CLASSPATH shell.mysql.GPhonebook $PARAMETERS $OPTIONAL_PARAMETERS</div><br />
 GPhonebook works like a phone book. In the first place, it looks up fixed-line numbers, and street addresses (by given latitude and longitude values) which are stored in a database.
@@ -163,7 +171,6 @@ In addition, it also retrieves email addresses and mobile/cell phone numbers.
 
 <p class="code"><br />
 PARAMETERS:<br/>
---apiKey	YOUR_OWN_API-KEY<br />
 --query	[all|address|email|phone]
 </p>
 
@@ -172,5 +179,7 @@ OPTIONAL_PARAMETERS<br />
 --help	print this help information
 </p>
 
+<h2><a id="mysql">Create the database phonebook for GPhonebook</a></2>
+Coming soon!
 </body>
 </html>

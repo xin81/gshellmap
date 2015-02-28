@@ -15,6 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License. 
 */
 import java.io.PrintStream;
+
+import shell.PropertyReader;
+
 import com.google.maps.GeoApiContext;
 
 /**
@@ -37,7 +40,7 @@ public class GooMetryShell {
 		String cp="$CLASSPATH";
 		out.println("usage: java -cp "+cp+":"+jarfile+" "+GooMetryShell.class.getName()+" PARAMETERS|[Optional Parameters]");
 		out.println("PARAMETERS:");
-		out.println("--apiKey\t[Your_Google_API_KEY]");
+		// out.println("--apiKey\t[Your_Google_API_KEY]");
 		out.println("--latitude\t[-90.000000, 90.000000]");
 		out.println("--longitude\t[-179.999999, 180.000000]");
 		
@@ -73,6 +76,7 @@ public class GooMetryShell {
 			
 			// TODO Auto-generated method stub
 			String KEY="******************";
+			KEY=PropertyReader.getPropertyValue("txt/edit_me.txt", "apiKey");
 			double latitude=0.0;
 			double longitude=0.0;
 			
@@ -80,8 +84,6 @@ public class GooMetryShell {
 				if(args[i].compareToIgnoreCase("--help")==0){
 					printHelp(System.out);
 					System.exit(0);
-				}else if(args[i].compareToIgnoreCase("--apiKey")==0){
-					KEY=args[i+1];
 				}else if(args[i].compareToIgnoreCase("--latitude")==0){
 					try{
 						latitude=Double.parseDouble(args[i+1]);

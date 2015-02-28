@@ -3,8 +3,6 @@ package shell.distance;
 import org.joda.time.Instant;
 
 import shell.geometry.GooMetry;
-import shell.geometry.GooMetryShell;
-
 import com.google.maps.DirectionsApi;
 import com.google.maps.DirectionsApiRequest;
 /*
@@ -21,7 +19,6 @@ import com.google.maps.DistanceMatrixApi;
 import com.google.maps.DistanceMatrixApiRequest;
 import com.google.maps.GeoApiContext;
 
-import com.google.maps.model.Bounds;
 import com.google.maps.model.DirectionsLeg;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.DirectionsStep;
@@ -31,7 +28,6 @@ import com.google.maps.model.DistanceMatrixElement;
 import com.google.maps.model.DistanceMatrixElementStatus;
 import com.google.maps.model.DistanceMatrixRow;
 import com.google.maps.model.Duration;
-import com.google.maps.model.EncodedPolyline;
 import com.google.maps.model.LatLng;
 import com.google.maps.model.TravelMode;
 import com.google.maps.model.Unit;
@@ -100,7 +96,7 @@ public class GMapInfo {
 			gmetry[0]=new GooMetry(origin);
 			gmetry[1]=new GooMetry(destination);
 			for(int i=0; i < MAX; i++){
-				gmetry[i].retrieve(KEY, context);
+				gmetry[i].retrieve(context);
 			}
 			
 			int i=0;

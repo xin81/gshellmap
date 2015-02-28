@@ -1,0 +1,4 @@
+-- examples for insert statements
+-- INSERT INTO person(lastname, name, latitude, longitude)VALUES('Langstrump', 'Pippilotta Viktualia Rullgardina Krusmynta Efraimsdotter', 59.329444, 18.068611);
+-- INSERT INTO email(address, pid)VALUES('pippilotta.viktualia.rullgardina.krusmynta.efraimsdotter.langstrump@gmail.se', 1);
+-- INSERT INTO phone(area_code, number, pid)VALUES(46, 2343923433623439336, 1);
