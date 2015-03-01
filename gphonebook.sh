@@ -1,5 +1,5 @@
 #/bin/bash
-MAIN=shell.mysql.Phonebook
+MAIN=shell.mysql.GPhonebook
 p1=--query 
 v1=address ## or all|email|phone
 

@@ -1,3 +1,0 @@
-apiKey:YOUR_OWN_API-KEY
-mysql_user:YOUR_OWN_MYSQL_USERNAME
-mysql_password:YOUR_OWN_MYSQL_PASSWORD

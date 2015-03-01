@@ -1,6 +1,6 @@
 package shell.geometry;
 /*
-Copyright 2015 Nguyen Viet Tan
+Copyright 2015 Nguyen Viet Tan (xin81，　阮越新)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@ limitations under the License.
 */
 import java.io.PrintStream;
 
+import shell.Constants;
 import shell.PropertyReader;
 
 import com.google.maps.GeoApiContext;
@@ -46,12 +47,12 @@ public class GooMetryShell {
 		
 		out.println("\nOptional Parameters:");
 		out.println("--help\tprints this help information");
+		out.println(Constants.getLicense());
 	}
 	
 	/**
 	 * Excutes this program by this following command:
-	 * <code>java -cp $CLASSPATH:$main_jarfile shell.geometry.GooMetryShell --apiKey AiZa...YOUR_OWN_API-KEY
-	 * --latitude $v1 --longitude $v2</code>,
+	 * <code>java -cp $CLASSPATH:$main_jarfile shell.geometry.GooMetryShell --latitude $v1 --longitude $v2</code>,
 	 * whereas <em>$v1</em> and <em>$v2</em> are degree values.<br />
 	 * <em>v1</em>=[-90.000000, 90.000000]<br />
 	 * <em>v2</em>=[-179.999999, 180.000000]<br />
@@ -76,7 +77,7 @@ public class GooMetryShell {
 			
 			// TODO Auto-generated method stub
 			String KEY="******************";
-			KEY=PropertyReader.getPropertyValue("txt/edit_me.txt", "apiKey");
+			KEY=PropertyReader.getPropertyValue(Constants.getPropertyFilePath(), "apiKey");
 			double latitude=0.0;
 			double longitude=0.0;
 			

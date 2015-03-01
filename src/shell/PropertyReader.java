@@ -6,11 +6,17 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * Reads a property file, and returns the value of the property
+ * @param property string
+ */
 public class PropertyReader {
 	private PropertyReader(){
-		
-	}
-	
+		// don't instantiate this class
+	}	
+	/**
+	 * @see PropertyReader
+	 */
 	public static String getPropertyValue(String filename, String property){
 		File file=new File(filename);
 		String value="";
@@ -22,7 +28,7 @@ public class PropertyReader {
 				while((string!=null)&&(string.length()>-1)){
 					string=br.readLine();
 					if(string!=null){
-						String[]token = string.split(":");
+						String[]token = string.split("=");
 						if(token!=null){
 							if(token[0].isEmpty()==false){
 								if(token[0].compareToIgnoreCase(property)==0){

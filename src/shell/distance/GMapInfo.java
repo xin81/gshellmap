@@ -33,13 +33,16 @@ import com.google.maps.model.TravelMode;
 import com.google.maps.model.Unit;
 
 /**
- * Retrieves all requested information on two location points.
- * During the retrieval, this class also takes predefined request settings into consideration 
+ * Provides methods for retrieving different types of information on an address.
+ * {@link #retrieve(String, String, String, String, Instant, Unit, TravelMode)} calculates the distance between two addresses
+ * {@link #retrieveDirections(String, String, String, TravelMode)} retrieves all directions from a start address to an end address
  */
 public class GMapInfo {
 	private GMapInfo(){
 		//
 	}
+	/*
+	 * */
 	public static void retrieveDirections(String apiKey, String origin, String destination, TravelMode mode){
 		GeoApiContext context=new GeoApiContext().setApiKey(apiKey);
 		DirectionsApiRequest diRequest=
@@ -78,6 +81,9 @@ public class GMapInfo {
 	}
 	
 	/**
+	 *Retrieves all requested information on two location points.
+	 * During the retrieval, this class also takes predefined request settings into consideration 
+	 *
 	 * As stated before (in the beginning of this document,
 	 * you need one API-key from Google API Console (https://code.google.com/apis/console).
 	 * After passing your API-key to this method,

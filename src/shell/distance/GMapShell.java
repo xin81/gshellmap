@@ -1,6 +1,6 @@
 package shell.distance;
 /*
-Copyright 2015 Nguyen Viet Tan
+Copyright 2015 Nguyen Viet Tan (xin81, 阮越新)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import java.io.PrintStream;
 // dependencies: joda-time-2.7.jar
 import org.joda.time.Instant;
 
+import shell.Constants;
 import shell.PropertyReader;
 
 /*
@@ -70,30 +71,31 @@ public class GMapShell{
 		out.println("--mode\t[driving|bicycling|walking|transit]");
 		out.println("--fuzzy\t[false|true]; if true, simple string queries can be performed  (e. g. origin address: England, destination address: Germany");
 		out.println("--routes\t[false|true]; if set true, all routes (directions) from the start address to the end address are listed");
+		out.println(Constants.getLicense());
 	}
 	
 
 	
 	/**
 	 * Executes this program by this following command:
-	 * <code>java -cp $CLASSPATH:$main_jarfile shell.distance.GMapShell --apiKey AIza..YOUR_OWN_API-KEY...</code>;
+	 * <code>java -cp $CLASSPATH:$main_jarfile shell.distance.GMapShell --$OPTIONS value(s)</code>;
 	 * whereas $CLASSPATH contains all required .jar files
 	 * <ul>
 	 * <li><a href="https://android.googlesource.com/platform/external/okhttp/+/master">okhttp-2.2.0.jar</a></li>
 	 * <li><a href="http://grepcode.com/snapshot/repo1.maven.org/maven2/com.google.code.gson/gson/2.3.1">gson-2.3.1.jar</a></li>
 	 * <li><a href="https://github.com/JodaOrg/joda-time">joda-time-2.7.jar</a></li>
-	 * <li>gmapservice.jar</li>
-	 * <li>okio.jar</li>
+	 * <li>LIBS_PATH/gmapservice.jar</li>
+	 * <li>LIBS_PATHokio.jar</li>
 	 * <li>$main_jarfile</li>
 	 * </ul>
 	 * and $main_jarfile is the actual .jar file (in the current version (since February 2015,
 	 * it's called <b>gshellmap.jar</b>)
-	 * which contains shell/GMapShell.class. As this document implies (-cp $CLASSPATH<b>:$main_jarfile</b>),
+	 * which contains shell/distance.GMapShell.class. As this document implies (-cp $CLASSPATH<b>:$main_jarfile</b>),
 	 * $main_jarfile must be added to the $CLASSPATH, since this .jar file contains more than one main class,
 	 * and it's not a directly executable .jar file.   
 	 * For help, type --help right after the class name (in this case "shell.distance.GMapShell")
 	 * 
-	 * If you want to, you can use these following options:<br />
+	 * If you want to, you can use these following $OPTIONS:<br />
 	 * --help<br />
 	 * --language determines the response language<br />
 	 * --unit IMPERIAL (in feet or miles)|METRIC (in metres or kilometres)<br />
@@ -117,7 +119,7 @@ public class GMapShell{
 		// TODO Auto-generated method stub
 		// requirements
 		String KEY="************************************";
-		KEY=PropertyReader.getPropertyValue("txt/edit_me.txt", "apiKey");
+		KEY=PropertyReader.getPropertyValue(Constants.getPropertyFilePath(), "apiKey");
 		String language="en-GB";
 		Instant instant=Instant.now();
 		Unit unit=Unit.METRIC;

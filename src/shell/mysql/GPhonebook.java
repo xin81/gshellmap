@@ -1,6 +1,6 @@
 package shell.mysql;
 /*
-Copyright 2015 Nguyen Viet Tan
+Copyright 2015 Nguyen Viet Tan (xin81，　阮越新)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.Statement;
 
+import shell.Constants;
 import shell.PropertyReader;
 import shell.geometry.GooMetry;
 
@@ -54,6 +55,7 @@ public class GPhonebook {
 		
 		out.println("OPTIONAL_PARAMETERS");
 		out.println("--help\tprint this help information");
+		out.println(Constants.getLicense());
 	}
 	
 	/*
@@ -193,7 +195,7 @@ public class GPhonebook {
 		String condition="(LOWER(person.lastname)=LOWER('"+lastname+"'))AND(LOWER(person.name) LIKE LOWER('%"+name+"%'))";
 		String pselection="person.lastname, person.name";
 		String KEY="**************";
-		KEY=PropertyReader.getPropertyValue("txt/edit_me.txt", "apiKey");
+		KEY=PropertyReader.getPropertyValue(Constants.getPropertyFilePath(), "apiKey");
 		ResultSet result=null;
 		/****************************************************************************************************************************************/
 		if(query.compareToIgnoreCase("address")==0){
@@ -299,7 +301,7 @@ public class GPhonebook {
 			/* retrieve latitude and longitude values for the given address */
 			GooMetry gmetry=new GooMetry(address);
 			String apiKey="****************************************";
-			apiKey=PropertyReader.getPropertyValue("txt/edit_me.txt", "apiKey");
+			apiKey=PropertyReader.getPropertyValue(Constants.getPropertyFilePath(), "apiKey");
 			GeoApiContext context=new GeoApiContext().setApiKey(apiKey);
 			gmetry.retrieve(context);
 			double latitude=90.0;
@@ -399,8 +401,8 @@ public class GPhonebook {
 				String db="phonebook";
 				String host="localhost";
 				String url="jdbc:mysql://"+host+"/"+db;
-				String user=PropertyReader.getPropertyValue("txt/edit_me.txt", "mysql_user");
-				String password=PropertyReader.getPropertyValue("txt/edit_me.txt", "mysql_password");
+				String user=PropertyReader.getPropertyValue(Constants.getPropertyFilePath(), "mysql_user");
+				String password=PropertyReader.getPropertyValue(Constants.getPropertyFilePath(), "mysql_password");
 				
 				try{
 					Connection connection=DriverManager.getConnection(url, user, password);
