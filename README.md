@@ -2,10 +2,12 @@
 ## Synopsis
 GShell Map executes web services by GoogleMap in the shell/terminal/command line (cmd). Currently, this application accesses four web services:
 Directory API <https://developers.google.com/maps/documentation/directions>
-Distance Matrix API<https://developers.google.com/maps/documentation/distancematrix>
-Elevation API<https://developers.google.com/maps/documentation/elevation>
-Geocoding API<https://developers.google.com/maps/documentation/geocoding>
+Distance Matrix API <https://developers.google.com/maps/documentation/distancematrix>
+Elevation API <https://developers.google.com/maps/documentation/elevation>
+Geocoding API <https://developers.google.com/maps/documentation/geocoding>
 
+Please, read doc/installation/ReadMe.html to learn more about the use of this application
+ 
 ## Code Example
 shell.distance.GMapShell
 
