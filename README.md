@@ -6,10 +6,16 @@ Distance Matrix API <https://developers.google.com/maps/documentation/distancema
 Elevation API <https://developers.google.com/maps/documentation/elevation>
 Geocoding API <https://developers.google.com/maps/documentation/geocoding>
 
-Please, read doc/installation/ReadMe.html to learn more about the use of this application
+Please, read doc/installation/ReadMe.html to learn more about the use of this application. If you want to try out this application right now without the need to understand it thoroughly, type in:
+
+- sh help.sh help
+- sh gshellmap.sh
+- sh gshellmetry.sh
+- sh gphonebook.sh
  
 ## Code Example
 shell.distance.GMapShell
+Executes basic GoogleMap functions like calculating the distance between two places.
 
 	// KEY = your own API-Key from Google
 	// origin_place = start address
@@ -25,12 +31,9 @@ shell.distance.GMapShell
 	}
 
 from GooMetryShell.java
+Translates two geographic coordinate values into a human readable address.
+In addition, also calculate the elevation
 
-	/*
-	* Translate a location point (latitude, longitude)
-	* into a human readable address (i. e. simple string)
-	* In addition, also calculate the elevation
-	*/
 	GooMetry gmetry=new GooMetry();
 	// KEY = YOUR_OWN_API-KEY
 	GeoApiContext context=new GeoApiContext().setApiKey(KEY);
@@ -60,6 +63,7 @@ from GooMetryShell.java
 	}
 
 from GPhonebook.java
+Looks up street addresses, phone numbers, and email address in a database
 
 	try{
 		// connect to the mysql database
@@ -81,8 +85,8 @@ from GPhonebook.java
 
 
 ## Motivation
-This application serves best as an example how to use Google Java client library.
-It's a simple application runs in all shell systems (terminals or command lines).
+This application serves best as a big example how to use Google Java client library.
+This simple application runs in most common shell systems (terminals or command lines - whatever you may call the black box window).
 In addition to most common and well known GoogleMap functions, this application also displays latitude and longitude values, and provides
 a phonebook application to store friends' and families' addresses and phone numbers.
 
@@ -97,13 +101,7 @@ coming soon!
 Describe and show how to run the tests with code examples.
 
 ## Contributors
-I am not sure yet whether I should let other people contribute to this very project or not.
-If you want to use my source codes to learn more about Google's Java client library,
-you are welcome to do so. If you want to make modifications to this project, I suggest to fork this project,
-and start project of your own which builds upon this one.
-However, it wouldn't be nice if you erased my name from your fork copy of this repository.
-Instead, please, keep my name in the source files, and a new 
-@author with your name as a Javadoc comment for all modified Java files you do.
+I am not sure yet whether I should let other people contribute to this very project or not. If you want to use my source codes to learn more about Google's Java client library, you are welcome to do so. If you want to make modifications to this project, I suggest to fork this project, and start a project of your own which builds upon this one. Please, don't remove my name from the source files.
 
 ## License
 Copyright 2015 Nguyen Viet Tan (xin81, 阮越新)
