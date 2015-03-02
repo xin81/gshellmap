@@ -13,16 +13,14 @@ Geocoding API<https://developers.google.com/maps/documentation/geocoding>
 
 ## Code Example
 shell.distance.GMapShell
-'''java
-GMapInfo.retrieve(KEY, origin_place, destination_place,language, instant, unit, mode);
-// if true, all directions (routes) from origin_place to destination_place are fetched
-if(showRoutes==true){
-	GMapInfo.retrieveDirections(KEY, origin_place, destination_place, mode);
-}
-'''
+
+	GMapInfo.retrieve(KEY, origin_place, destination_place,language, instant, unit, mode);
+	// if true, all directions (routes) from origin_place to destination_place are fetched
+	if(showRoutes==true){
+		GMapInfo.retrieveDirections(KEY, origin_place, destination_place, mode);
+	}
 
 from GooMetryShell.java
-'''java
 
 	/*
 	* Translate a location point (latitude, longitude)
@@ -56,9 +54,9 @@ from GooMetryShell.java
 			e.printStackTrace();
 		}
 	}
-'''
+
 from GPhonebook.java
-'''java
+
 try{
 
 	// connect to the mysql database
@@ -77,7 +75,7 @@ try{
 	}
 }catch(Exception){
 }
-'''
+
 
 ## Motivation
 This application serves best as an example how to use Google Java client library.
