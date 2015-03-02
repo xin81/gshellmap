@@ -14,18 +14,12 @@ Geocoding API<https://developers.google.com/maps/documentation/geocoding>
 ## Code Example
 shell.distance.GMapShell
 
-KEY your own API-Key from Google
-
-origin_place start address
-
-destination_place end address
-
-language response language
-
-instant departure time (e.g. Instant.now())
-
-mode travel mode (e.g . DRIVING, WALKING, BICYCLING, TRANSIT)
-
+	// KEY = your own API-Key from Google
+	// origin_place = start address
+	// destination_place = end address
+	// language = response language
+	// instant = departure time (e.g. Instant.now())
+	// mode = travel mode (e.g . DRIVING, WALKING, BICYCLING, TRANSIT)
 	GMapInfo.retrieve(KEY, origin_place, destination_place,language, instant, unit, mode);
 	
 	// if true, all directions (routes) from origin_place to destination_place are fetched
