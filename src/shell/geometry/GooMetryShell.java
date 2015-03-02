@@ -65,16 +65,7 @@ public class GooMetryShell {
 			printHelp(System.err);
 			System.exit(-1);
 		}else{
-			boolean modulo2=false;
 			int i=0;
-			if(args[0].compareToIgnoreCase(GooMetryShell.class.getName())==0){
-				i=1;
-				modulo2=((i%2)!=0);
-			}else{
-				i=0;
-				modulo2=((i%2)==0);
-			}
-			
 			// TODO Auto-generated method stub
 			String KEY="******************";
 			KEY=PropertyReader.getPropertyValue(Constants.getPropertyFilePath(), "apiKey");
@@ -82,27 +73,26 @@ public class GooMetryShell {
 			double longitude=0.0;
 			
 			do{
-				if(args[i].compareToIgnoreCase("--help")==0){
-					printHelp(System.out);
-					System.exit(0);
-				}else if(args[i].compareToIgnoreCase("--latitude")==0){
-					try{
-						latitude=Double.parseDouble(args[i+1]);
-					}catch(NumberFormatException e){
-						System.err.println(e.getMessage());
-					}
-				}else if(args[i].compareToIgnoreCase("--longitude")==0){
-					try{
-						longitude=Double.parseDouble(args[i+1]);
-					}catch(NumberFormatException e){
-						System.err.println(e.getMessage());
-					}
-				}else{
-					if(modulo2==false){
+				if(args[i].startsWith("--")==true){
+					if(args[i].compareToIgnoreCase("--help")==0){
+						printHelp(System.out);
+						System.exit(0);
+					}else if(args[i].compareToIgnoreCase("--latitude")==0){
+						try{
+							latitude=Double.parseDouble(args[i+1]);
+						}catch(NumberFormatException e){
+							System.err.println(e.getMessage());
+						}
+					}else if(args[i].compareToIgnoreCase("--longitude")==0){
+						try{
+							longitude=Double.parseDouble(args[i+1]);
+						}catch(NumberFormatException e){
+							System.err.println(e.getMessage());
+						}
+					}else{
 						System.err.println("unknown option: "+args[i]);
 					}
 				}
-				
 				i++;
 			}while(i < args.length);
 			

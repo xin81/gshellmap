@@ -371,7 +371,7 @@ public class GPhonebook {
 			int i=0;
 			do{
 				final String str="--";
-				if(args[i].startsWith("--")==true){
+				if(args[i].startsWith(str)==true){
 					if(args[i].compareToIgnoreCase(str+"help")==0){
 						printHelp(System.out);
 						System.exit(0);
@@ -387,6 +387,8 @@ public class GPhonebook {
 								addingContact=false;
 							}
 						}
+					}else{
+						System.err.println("uknown option: "+args[i]);
 					}
 				}
 				i++;

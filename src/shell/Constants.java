@@ -24,6 +24,6 @@ public static String getLicense(){
 }
 
 public static String getPropertyFilePath(){
-	return "txt/"+PROPERTY_FILE;
+	return PROPERTY_FILE;
 }
 }

@@ -126,67 +126,53 @@ public class GMapShell{
 		TravelMode mode=TravelMode.DRIVING;
 		
 		boolean fuzzy=false;
-		boolean modulo2=false;
-		boolean showRoutes=false;
-		
+		boolean showRoutes=false;		
 		if(args.length <= 0){
 			printHelp(System.err);
 			System.exit(-1);
 		}else{
 			int i=0;
-			if(args[0].compareToIgnoreCase(GMapShell.class.getName())==0){
-				// executing outside of eclipse (or any other IDE)
-				i=1;
-				modulo2=((i%2)!=0);
-			}else{
-				// executing inside of eclipse (or any other IDE)
-				i=0;
-				modulo2=((i%2)==0);
-			}
-			
 			do{
-				// System.out.println("args["+i+"]: "+args[i]);
-				if(args[i].compareToIgnoreCase("--help")==0){
-					printHelp(System.out);
-					System.exit(0);
-				}else if(args[i].compareToIgnoreCase("--language")==0){
-					language=args[i+1];
-				}else if(args[i].compareToIgnoreCase("--departure")==0){
-					// more about DateTimeFormatter??
-					instant=Instant.parse(args[i+1]);
-				}
-				else if(args[i].compareToIgnoreCase("--unit")==0){
-					if(args[i+1].compareToIgnoreCase("imperial")==0){
-						unit=Unit.IMPERIAL;
+				if(args[i].startsWith("--")==true){
+					if(args[i].compareToIgnoreCase("--help")==0){
+						printHelp(System.out);
+						System.exit(0);
+					}else if(args[i].compareToIgnoreCase("--language")==0){
+						language=args[i+1];
+					}else if(args[i].compareToIgnoreCase("--departure")==0){
+						// more about DateTimeFormatter??
+						instant=Instant.parse(args[i+1]);
+					}else if(args[i].compareToIgnoreCase("--unit")==0){
+						if(args[i+1].compareToIgnoreCase("imperial")==0){
+							unit=Unit.IMPERIAL;
+						}else{
+							unit=Unit.METRIC;
+						}
+					}else if(args[i].compareToIgnoreCase("--fuzzy")==0){
+						if((args[i+1].compareToIgnoreCase("true")==0)){
+							fuzzy=true;
+						}else{
+							fuzzy=false;
+						}
+					}else if(args[i].compareToIgnoreCase("--mode")==0){
+						if(args[i+1].compareToIgnoreCase("bicycling")==0){
+							mode=TravelMode.BICYCLING;
+						}else if(args[i+1].compareToIgnoreCase("driving")==0){
+							mode=TravelMode.DRIVING;
+						}else if(args[i+1].compareToIgnoreCase("transit")==0){
+							mode=TravelMode.TRANSIT;
+						}else if(args[i+1].compareToIgnoreCase("walking")==0){
+							mode=TravelMode.WALKING;
+						}else{
+							System.err.println("unknown travel mode");
+						}						
+					}else if(args[i].compareToIgnoreCase("--routes")==0){
+						if(args[i+1].compareToIgnoreCase("true")==0){
+							showRoutes=true;
+						}else{
+							showRoutes=false;
+						}
 					}else{
-						unit=Unit.METRIC;
-					}
-				}else if(args[i].compareToIgnoreCase("--fuzzy")==0){
-					if((args[i+1].compareToIgnoreCase("true")==0)){
-						fuzzy=true;
-					}else{
-						fuzzy=false;
-					}
-				}else if(args[i].compareToIgnoreCase("--mode")==0){
-					if(args[i+1].compareToIgnoreCase("bicycling")==0){
-						mode=TravelMode.BICYCLING;
-					}else if(args[i+1].compareToIgnoreCase("driving")==0){
-						mode=TravelMode.DRIVING;
-					}else if(args[i+1].compareToIgnoreCase("transit")==0){
-						mode=TravelMode.TRANSIT;
-					}else if(args[i+1].compareToIgnoreCase("walking")==0){
-						mode=TravelMode.WALKING;
-					}else{
-						System.err.println("unknown travel mode");
-					}						
-				}else if(args[i].compareToIgnoreCase("--routes")==0){
-					if(args[i+1].compareToIgnoreCase("true")==0){
-						showRoutes=true;
-					}else{
-						showRoutes=false;
-					}
-				}else{
-					if(modulo2==false){
 						System.err.println("unknown option: "+args[i]);
 					}
 				}
