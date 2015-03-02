@@ -57,24 +57,23 @@ from GooMetryShell.java
 
 from GPhonebook.java
 
-try{
+	try{
+		// connect to the mysql database
+		Connection connection=DriverManager.getConnection(url, user, password);
+		Statement statement=connection.createStatement();
 
-	// connect to the mysql database
-	Connection connection=DriverManager.getConnection(url, user, password);
-	Statement statement=connection.createStatement();
-
-	// find addresses, phone numbers, or email address
-	// query=[all|address|email|phone]					
-	if(query.isEmpty()==false){
-		retrieve(query, statement);
-	}
+		// find addresses, phone numbers, or email address
+		// query:= all|address|email|phone					
+		if(query.isEmpty()==false){
+			retrieve(query, statement);
+		}
 	
-	// update the database
-	if(addingContact==true){					
-		insert(statement);
+		// update the database
+		if(addingContact==true){					
+			insert(statement);
+		}
+	}catch(Exception){
 	}
-}catch(Exception){
-}
 
 
 ## Motivation
