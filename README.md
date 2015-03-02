@@ -12,20 +12,18 @@ Elevation API<https://developers.google.com/maps/documentation/elevation>
 Geocoding API<https://developers.google.com/maps/documentation/geocoding>
 
 ## Code Example
-'''
-// from GMapShell.java
-/* @param origin_place start address
-@param destination_place end address
-@param instant (e. g. Instant.now()) departure time
-@param mode travel mode (e. g. TravelMode.Driving, TravelMode.WALKING, TravelMode.TRANSIT, TravelModel.BICYCLING) 
-*/
+shell.distance.GMapShell
+'''java
 GMapInfo.retrieve(KEY, origin_place, destination_place,language, instant, unit, mode);
 // if true, all directions (routes) from origin_place to destination_place are fetched
 if(showRoutes==true){
 	GMapInfo.retrieveDirections(KEY, origin_place, destination_place, mode);
 }
+'''
 
-// from GooMetryShell.java
+from GooMetryShell.java
+'''java
+
 	/*
 	* Translate a location point (latitude, longitude)
 	* into a human readable address (i. e. simple string)
@@ -58,9 +56,11 @@ if(showRoutes==true){
 			e.printStackTrace();
 		}
 	}
+'''
+from GPhonebook.java
+'''java
+try{
 
-try[
-	// from GPhonebook.java
 	// connect to the mysql database
 	Connection connection=DriverManager.getConnection(url, user, password);
 	Statement statement=connection.createStatement();
@@ -76,6 +76,7 @@ try[
 		insert(statement);
 	}
 }catch(Exception){
+}
 '''
 
 ## Motivation
