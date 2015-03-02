@@ -107,4 +107,8 @@ Instead, please, keep my name in the source files, and a new
 Copyright 2015 Nguyen Viet Tan (xin81, 阮越新)
 Licensed under the Apache License, Version 2.0 (the "License")you may not use this file except in compliance with the License.You may obtain a copy of the License at
 	http://www.apache.org/licenses/LICENSE-2.0
+<<<<<<< HEAD
 Unless required by applicable law or agreed to in writing, softwaredistributed under the License is distributed on an "AS IS" BASIS,WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.See the License for the specific language governing permissions and limitations under the License.
+=======
+Unless required by applicable law or agreed to in writing, softwaredistributed under the License is distributed on an "AS IS" BASIS,WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.See the License for the specific language governing permissions and limitations under the License.
+>>>>>>> 15b2ee54f002253f92290e718db51d9420a168e4
