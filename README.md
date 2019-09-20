@@ -6,7 +6,7 @@ Distance Matrix API <https://developers.google.com/maps/documentation/distancema
 Elevation API <https://developers.google.com/maps/documentation/elevation>
 Geocoding API <https://developers.google.com/maps/documentation/geocoding>
 
-Please, read doc/installation/ReadMe.html to learn more about the use of this application. If you want to try out this application right now without the need to understand it thoroughly, type in:
+Please, read doc/installation/ReadMe.html to learn more about the use of this application. If you want to try out this application right now without the need to understand it in details, type in:
 
 - sh help.sh help
 - sh gshellmap.sh
